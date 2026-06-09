@@ -4,17 +4,29 @@
 
 ## 快速开始
 
+### 安装
+
 ```bash
-# 1. 安装插件
-/plugin marketplace add kkry486/ai-learn-plugin
-/plugin install ai-learn
+# 1. 克隆仓库
+git clone https://github.com/kkry486/ai-learn-plugin.git
 
-# 2. 安装依赖（可选，跳过则知识关联回退到关键词匹配）
+# 2. 复制到你的 Claude Code 项目
+cp -r ai-learn-plugin/.claude/*  你的项目路径/.claude/
+cp -r ai-learn-plugin/knowledge_store  你的项目路径/
+
+# 3. 安装依赖（可选，跳过则知识关联回退到关键词匹配）
 pip install chromadb
+```
 
-# 3. 开始学习
+### 使用
+
+在 Claude Code 里输入：
+
+```
 /learn C++ 移动语义
 ```
+
+AI 会引导你走完五步：**概念地图 → 费曼解释 → 自测检验 → 关联内化 → 巩固总结**。每一步都有确认点，不满意随时修改。
 
 AI 会引导你走完五步：**概念地图 → 费曼解释 → 自测检验 → 关联内化 → 巩固总结**。每一步都有确认点，不满意随时修改。
 
