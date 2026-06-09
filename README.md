@@ -6,15 +6,31 @@
 
 ### 安装
 
-```bash
-# 1. 克隆仓库
-git clone https://github.com/kkry486/ai-learn-plugin.git
+**方式一：GitHub 网页下载（不需要 git，推荐）**
 
-# 2. 复制到你的 Claude Code 项目
+1. 打开 https://github.com/kkry486/ai-learn-plugin
+2. 点绿色的 **Code** 按钮 → **Download ZIP**
+3. 解压到你电脑上，得到文件夹 `ai-learn-plugin/`
+4. 将里面的 `.claude/` 和 `knowledge_store/` 两个目录，复制到你的项目根目录下：
+
+```
+你的项目/
+├── .claude/          ← 把 .claude/ 整个粘过来（和已有的合并）
+├── knowledge_store/  ← 把 knowledge_store/ 整个粘过来
+└── （你原来的其他文件）
+```
+
+5. （可选）安装 chromadb：
+```bash
+pip install chromadb
+```
+
+**方式二：git clone**
+
+```bash
+git clone https://github.com/kkry486/ai-learn-plugin.git
 cp -r ai-learn-plugin/.claude/*  你的项目路径/.claude/
 cp -r ai-learn-plugin/knowledge_store  你的项目路径/
-
-# 3. 安装依赖（可选，跳过则知识关联回退到关键词匹配）
 pip install chromadb
 ```
 
@@ -27,7 +43,6 @@ pip install chromadb
 ```
 
 AI 会引导你走完五步：**概念地图 → 费曼解释 → 自测检验 → 关联内化 → 巩固总结**。每一步都有确认点，不满意随时修改。
-
 
 ## 工作流
 
