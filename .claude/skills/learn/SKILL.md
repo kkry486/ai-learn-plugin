@@ -1,7 +1,7 @@
 ---
 name: learn
 description: AI 辅助学习技能。当用户表示想学习某个概念、技术、主题，或输入 /learn 命令时激活。基于费曼学习法构建的完整五步学习闭环。
-context: fork
+context: inline
 ---
 
 # AI 辅助学习技能
