@@ -1,0 +1,11 @@
+{
+  "name": "ai-learn",
+  "version": "0.1.0",
+  "description": "AI 辅助学习系统 —— 基于费曼技巧 + 递进式自测的五步学习工作流。输入一个主题，AI 引导你完成：概念地图 → 费曼解释 → 自测检验 → 关联内化 → 巩固总结。知识自动持久化，学新主题时自动关联已有知识。",
+  "author": "ai-learn",
+  "repository": "https://github.com/kkry486/ai-learn-plugin",
+  "keywords": ["learning", "feynman", "education", "knowledge-graph", "self-test"],
+  "agents": [".claude/agents/learn-agent.md"],
+  "commands": [".claude/commands/learn.md"],
+  "skills": [".claude/skills/learn/SKILL.md"]
+}
