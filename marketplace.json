@@ -1,0 +1,12 @@
+{
+  "name": "AI Learn",
+  "description": "AI 辅助学习系统 —— 基于费曼学习法的 Claude Code 插件",
+  "plugins": [
+    {
+      "name": "ai-learn",
+      "source": "./",
+      "description": "基于费曼学习法的五步学习闭环：概念地图 → 费曼解释 → 自测检验 → 关联内化 → 巩固总结",
+      "version": "0.1.0"
+    }
+  ]
+}
