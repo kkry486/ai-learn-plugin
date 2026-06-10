@@ -1,6 +1,6 @@
 ---
 description: 启动 AI 辅助学习工作流。输入你想学习的任何主题，AI 将引导你通过五步闭环（概念地图→费曼解释→自测检验→关联内化→巩固总结）真正掌握它。
-allowed-tools: Read, Write, Bash(ai-learn-plugin/knowledge_store/*), WebSearch, AskUserQuestion, Glob
+allowed-tools: Read, Write, Bash(knowledge_store/*), WebSearch, AskUserQuestion, Glob
 ---
 
 启动 AI 辅助学习系统，激活 ai-learn Agent。

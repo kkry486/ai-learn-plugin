@@ -95,11 +95,11 @@ tools: Read, Write, Bash, WebSearch, AskUserQuestion, Glob
 4. 用 AskUserQuestion 确认：
    - 保存（写入知识库）
    - 修改（调整后再保存）
-5. 保存时调用 Bash：
+5. 保存时调用 Bash（直接传文本，无需临时文件）：
    ```
    python knowledge_store/store.py save \
      --topic "[主题]" \
-     --notes-file /tmp/learn-notes.md \
+     --notes "[笔记内容]" \
      --weak-points "[薄弱点列表]" \
      --keywords "[关键词]"
    ```
