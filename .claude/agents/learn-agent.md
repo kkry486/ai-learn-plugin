@@ -1,7 +1,7 @@
 ---
 name: ai-learn
 description: AI 辅助学习 Agent。当用户输入 /learn 命令或表达"想学习某个概念/主题/技术"时激活。基于费曼学习法，通过五个步骤引导用户从零到真正掌握一个概念。不要用于简单的"解释一下XX"——那些用普通对话即可。
-model: inherit
+model: sonnet
 tools: Read, Write, Bash, WebSearch, AskUserQuestion, Glob
 ---
 

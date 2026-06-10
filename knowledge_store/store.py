@@ -8,9 +8,7 @@
 
 import sqlite3
 import json
-import os
-import sys
-import hashlib
+import argparse
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -218,92 +216,61 @@ def _save_to_chroma(record_id: int, topic: str, notes: str, keywords: str):
 # ═══════════════════════════════════════════════════
 
 def main():
-    if len(sys.argv) < 2:
-        print("用法: store.py <command> [options]")
-        print("命令:")
-        print("  save      --topic X --notes-file Y [--keywords Z] [--weak-points W] [--concept-map C]")
-        print("  search    --query X [--limit N]")
-        print("  list")
-        print("  get       --topic X")
-        print("  init      (初始化数据库)")
-        sys.exit(1)
+    parser = argparse.ArgumentParser(description="AI Learn 知识库存储引擎")
+    subparsers = parser.add_subparsers(dest="cmd", required=True)
 
-    cmd = sys.argv[1]
-    args = _parse_args(sys.argv[2:])
+    p_save = subparsers.add_parser("save")
+    p_save.add_argument("--topic", required=True)
+    p_save.add_argument("--notes-file", default="")
+    p_save.add_argument("--keywords", default="")
+    p_save.add_argument("--weak-points", default="")
+    p_save.add_argument("--concept-map", default="")
 
-    if cmd == "save":
-        topic = args.get("--topic", "")
-        notes_file = args.get("--notes-file", "")
+    p_search = subparsers.add_parser("search")
+    p_search.add_argument("--query", required=True)
+    p_search.add_argument("--limit", type=int, default=5)
 
-        if not topic:
-            print("错误: --topic 是必填项")
-            sys.exit(1)
+    subparsers.add_parser("list")
+    p_get = subparsers.add_parser("get")
+    p_get.add_argument("--topic", required=True)
+    subparsers.add_parser("init")
 
+    args = parser.parse_args()
+
+    if args.cmd == "save":
         notes = ""
-        if notes_file and os.path.exists(notes_file):
-            notes = Path(notes_file).read_text(encoding="utf-8")
-        elif notes_file:
-            notes = notes_file  # 直接传入文本
+        if args.notes_file and Path(args.notes_file).exists():
+            notes = Path(args.notes_file).read_text(encoding="utf-8")
+        elif args.notes_file:
+            notes = args.notes_file
 
         rid = save_learning_record(
-            topic=topic,
+            topic=args.topic,
             notes=notes,
-            keywords=args.get("--keywords", ""),
-            weak_points=args.get("--weak-points", ""),
-            concept_map=args.get("--concept-map", ""),
+            keywords=args.keywords,
+            weak_points=getattr(args, "weak-points", ""),
+            concept_map=getattr(args, "concept-map", ""),
         )
         print(json.dumps({"status": "ok", "record_id": rid}))
 
-    elif cmd == "search":
-        query = args.get("--query", "")
-        limit = int(args.get("--limit", "5"))
-
-        if not query:
-            print("错误: --query 是必填项")
-            sys.exit(1)
-
-        results = search_semantic(query, limit)
+    elif args.cmd == "search":
+        results = search_semantic(args.query, args.limit)
         print(json.dumps(results, ensure_ascii=False, indent=2))
 
-    elif cmd == "list":
+    elif args.cmd == "list":
         results = list_all_topics()
         print(json.dumps(results, ensure_ascii=False, indent=2))
 
-    elif cmd == "get":
-        topic = args.get("--topic", "")
-        if not topic:
-            print("错误: --topic 是必填项")
-            sys.exit(1)
-        record = get_topic_notes(topic)
+    elif args.cmd == "get":
+        record = get_topic_notes(args.topic)
         if record:
             print(json.dumps(record, ensure_ascii=False, indent=2))
         else:
-            print(json.dumps({"status": "not_found", "topic": topic}))
+            print(json.dumps({"status": "not_found", "topic": args.topic}))
 
-    elif cmd == "init":
+    elif args.cmd == "init":
         init_db()
         print(json.dumps({"status": "ok", "db_path": str(DB_PATH)}))
-
-    else:
-        print(f"未知命令: {cmd}")
-        sys.exit(1)
-
-
-def _parse_args(argv: list[str]) -> dict[str, str]:
-    result = {}
-    i = 0
-    while i < len(argv):
-        if argv[i].startswith("--"):
-            key = argv[i]
-            if i + 1 < len(argv) and not argv[i + 1].startswith("--"):
-                result[key] = argv[i + 1]
-                i += 2
-            else:
-                result[key] = ""
-                i += 1
-        else:
-            i += 1
-    return result
 
 
 if __name__ == "__main__":
